@@ -18,4 +18,9 @@ class Api::V1::CompaniesController < ApplicationController
     companies = Company.not_trialing
     render json: {companies: companies}
   end
+
+  def created_last_month
+    companies = Company.created_last_month
+    render json: {companies: companies}
+  end
 end

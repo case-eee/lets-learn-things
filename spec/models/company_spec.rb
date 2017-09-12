@@ -24,4 +24,14 @@ describe Company do
       expect(Company.with_modern_plan).to include(abc, penelope)
     end
   end
+
+  describe ".not_trialing" do
+    it "returns a list of companies with a modern plan" do
+      penelope = Company.create!(name: "Penelope's", plan_level: "enterprise", trial_status: 2.days.from_now)
+      abc = Company.create!(name: "ABC's", plan_level: "basic", trial_status: 5.days.from_now)
+      zebra = Company.create!(name: "Zebra Company", plan_level: "legacy", trial_status: 2.days.ago)
+
+      expect(Company.not_trialing.length).to eq(1)
+    end
+  end
 end

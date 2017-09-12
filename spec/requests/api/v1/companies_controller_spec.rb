@@ -29,7 +29,7 @@ describe "CompaniesController" do
   end
 
   describe "GET /api/v1/companies/with_modern_plan" do
-    it "returns a list of companies sorted alphabetically by name" do
+    it "returns a list of companies with a modern plan" do
       penelope = Company.create!(name: "Penelope's Shop", plan_level: "enterprise")
       abc = Company.create!(name: "ABC's Shop", plan_level: "legacy")
 

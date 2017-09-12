@@ -29,7 +29,7 @@ describe "CompaniesController" do
   end
 
   describe "GET /api/v1/companies/with_modern_plan" do
-    it "returns a list of companies sorted alphabetically by name" do
+    it "returns a list of companies with a modern plan" do
       penelope = Company.create!(name: "Penelope's Shop", plan_level: "enterprise")
       abc = Company.create!(name: "ABC's Shop", plan_level: "legacy")
 
@@ -38,6 +38,20 @@ describe "CompaniesController" do
       expect(response).to be_success
       parsed_response = JSON.parse(response.body)
       expect(parsed_response["companies"].length).to eq(1)
+    end
+  end
+
+  describe "GET /api/v1/companies/not_trialing" do
+    it "returns a list of companies that are not currently trialing" do
+      penelope = Company.create!(name: "Penelope's Shop", plan_level: "enterprise", trial_status: 2.days.from_now)
+      abc = Company.create!(name: "ABC's Shop", plan_level: "legacy", trial_status: 5.days.ago)
+      zebra = Company.create!(name: "Zebra's Shop", plan_level: "legacy", trial_status: 2.days.ago)
+
+      get "/api/v1/companies/not_trialing"
+
+      expect(response).to be_success
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response["companies"].length).to eq(2)
     end
   end
 end

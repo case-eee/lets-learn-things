@@ -12,4 +12,8 @@ class Company < ApplicationRecord
   def self.with_modern_plan
     where.not(plan_level: ["legacy", "custom"])
   end
+
+  def self.not_trialing
+    where("trial_status < ?", Time.current)
+  end
 end

@@ -8,4 +8,8 @@ class Company < ApplicationRecord
   def self.sort_alphabetically
     order(:name)
   end
+
+  def self.with_modern_plan
+    where.not(plan_level: ["legacy", "custom"])
+  end
 end

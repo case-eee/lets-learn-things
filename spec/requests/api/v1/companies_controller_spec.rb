@@ -27,4 +27,17 @@ describe "CompaniesController" do
       expect(parsed_response["companies"].second["name"]).to eq(penelope.name)
     end
   end
+
+  describe "GET /api/v1/companies/with_modern_plan" do
+    it "returns a list of companies sorted alphabetically by name" do
+      penelope = Company.create!(name: "Penelope's Shop", plan_level: "enterprise")
+      abc = Company.create!(name: "ABC's Shop", plan_level: "legacy")
+
+      get "/api/v1/companies/with_modern_plan"
+
+      expect(response).to be_success
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response["companies"].length).to eq(1)
+    end
+  end
 end

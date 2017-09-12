@@ -16,4 +16,8 @@ class Company < ApplicationRecord
   def self.not_trialing
     where("trial_status < ?", Time.current)
   end
+
+  def self.created_last_month
+    where("created_at > ? AND created_at < ?", Date.today.last_month.beginning_of_month, Date.today.beginning_of_month )
+  end
 end

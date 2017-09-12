@@ -13,4 +13,9 @@ class Api::V1::CompaniesController < ApplicationController
     companies = Company.with_modern_plan
     render json: {companies: companies}
   end
+
+  def not_trialing
+    companies = Company.not_trialing
+    render json: {companies: companies}
+  end
 end
